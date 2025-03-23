@@ -1,13 +1,12 @@
 import React from "react";
+import Page from "./Page";
 import "./PageList.css";
 
-function PageList({ pages }) {
+function PageList({ pages, onDelete }) {
   return (
     <div className="page-list">
       {pages.map((page, index) => (
-        <div key={index} className="page-item">
-          <img src={page} alt={`Page ${index + 1}`} />
-        </div>
+        <Page key={index} page={page} index={index} onDelete={onDelete} />
       ))}
     </div>
   );

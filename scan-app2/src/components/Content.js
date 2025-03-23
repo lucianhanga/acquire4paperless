@@ -77,6 +77,10 @@ function Content() {
     }
   };
 
+  const handleDelete = (index) => {
+    setPages(pages.filter((_, i) => i !== index));
+  };
+
   return (
     <div className="App-content">
       {isAcquiring ? (
@@ -90,7 +94,7 @@ function Content() {
         />
       ) : (
         <>
-          <PageList pages={pages} />
+          <PageList pages={pages} onDelete={handleDelete} />
           <div className="button-row">
             <button className="add-page-button" onClick={handleAddPage}>Add Page</button>
             <button className="submit-button">Submit</button>
