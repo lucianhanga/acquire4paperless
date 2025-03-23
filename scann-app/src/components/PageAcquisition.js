@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
 import NativeCameraCapture from "./NativeCameraCapture";
 import ImagePreview from "./ImagePreview";
-import ActionButtons from "./ActionButtons";
+import InitialActionButtons from "./InitialActionButtons";
+import ImageActionButtons from "./ImageActionButtons";
 import ImageEditor from "./ImageEditor";
 import "./PageAcquisition.css";
 
@@ -91,11 +92,14 @@ function PageAcquisition({ onConfirm }) {
   return (
     <div className="page-acquisition">
       {!isEditing && <ImagePreview image={image} />}
-      {!isEditing && (
-        <ActionButtons
-          image={image}
+      {!isEditing && !image && (
+        <InitialActionButtons
           onTakePicture={handleTakePicture}
           onLoadPicture={handleLoadPicture}
+        />
+      )}
+      {!isEditing && image && (
+        <ImageActionButtons
           onConfirmPicture={handleConfirmPicture}
           onDiscardPicture={handleDiscardPicture}
           onEditPicture={handleEditPicture}

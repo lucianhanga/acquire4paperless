@@ -3,6 +3,7 @@ import PageAcquisition from "./components/PageAcquisition";
 import PictureList from "./components/PictureList";
 import GeneratePdfButton from "./components/GeneratePdfButton";
 import PdfPreview from "./components/PdfPreview";
+import Header from "./components/Header";
 import "./App.css";
 
 function App() {
@@ -33,8 +34,8 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Scanner for Paperless</h1>
+      <Header />
+      <div className="App-content">
         {pdfUrl ? (
           <PdfPreview pdfUrl={pdfUrl} onSubmit={handleSubmitPdf} onDiscard={handleDiscardPdf} />
         ) : (
@@ -53,7 +54,7 @@ function App() {
             )}
           </>
         )}
-      </header>
+      </div>
     </div>
   );
 }
