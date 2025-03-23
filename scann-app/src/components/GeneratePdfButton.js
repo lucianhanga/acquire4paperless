@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import jsPDF from "jspdf";
+import PdfPreview from "./PdfPreview";
 import "./GeneratePdfButton.css";
 
-function GeneratePdfButton({ pictures }) {
+function GeneratePdfButton({ pictures, onPdfGenerated }) {
+  const [pdfUrl, setPdfUrl] = useState(null);
+
   const generatePdf = () => {
     const pdf = new jsPDF({
       orientation: "portrait",
@@ -17,7 +20,10 @@ function GeneratePdfButton({ pictures }) {
       pdf.addImage(picture, "JPEG", 0, 0, 210, 297); // A4 size in mm
     });
 
-    pdf.save("document.pdf");
+    const pdfBlob = pdf.output("blob");
+    const pdfUrl = URL.createObjectURL(pdfBlob);
+    setPdfUrl(pdfUrl);
+    onPdfGenerated(pdfUrl);
   };
 
   return (
