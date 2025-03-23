@@ -16,6 +16,7 @@ function Content() {
   const handleDiscard = () => {
     setIsAcquiring(false);
     setImage(null); // Reset image when discarding
+    setPages([]); // Clear the list of pictures
   };
 
   const handleAdd = () => {
@@ -112,7 +113,7 @@ function Content() {
           <div className="button-row">
             <button className="add-page-button" onClick={handleAddPage}>Add Page</button>
             <button className="submit-button" onClick={handleSubmit}>Submit</button>
-            <button className="discard-button">Discard</button>
+            <button className="discard-button" onClick={handleDiscard}>Discard</button>
           </div>
         </>
       )}
