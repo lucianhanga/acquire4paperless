@@ -1,22 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import PageAcquisition from "./components/PageAcquisition";
+import PictureList from "./components/PictureList";
+import "./App.css";
 
 function App() {
+  const [isPageAcquisitionOpen, setIsPageAcquisitionOpen] = useState(false);
+  const [pictures, setPictures] = useState([]);
+
+  const handleConfirmPicture = (image) => {
+    setPictures([...pictures, image]);
+    setIsPageAcquisitionOpen(false);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>Scanner for Paperless</h1>
+        {!isPageAcquisitionOpen && (
+          <button onClick={() => setIsPageAcquisitionOpen(true)}>Add Page</button>
+        )}
+        {isPageAcquisitionOpen && <PageAcquisition onConfirm={handleConfirmPicture} />}
+        <PictureList pictures={pictures} />
       </header>
     </div>
   );
