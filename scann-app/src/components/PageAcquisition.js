@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 import NativeCameraCapture from "./NativeCameraCapture";
+import ImagePreview from "./ImagePreview";
+import ActionButtons from "./ActionButtons";
 import "./PageAcquisition.css";
 
 function PageAcquisition({ onConfirm }) {
@@ -30,27 +32,27 @@ function PageAcquisition({ onConfirm }) {
     }
   };
 
+  const handleDiscardPicture = () => {
+    setImage(null);
+  };
+
   return (
     <div className="page-acquisition">
-      {image ? (
-        <img src={image} alt="Preview" className="image-preview" />
-      ) : (
-        <div className="image-placeholder">
-          <p>Picture Preview</p>
-        </div>
-      )}
-      <div className="button-row">
-        <button onClick={handleTakePicture}>Take Picture</button>
-        <button onClick={handleLoadPicture}>Load Picture</button>
-        {image && <button onClick={handleConfirmPicture}>Confirm Picture</button>}
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          style={{ display: "none" }}
-          onChange={handleImageChange}
-        />
-      </div>
+      <ImagePreview image={image} />
+      <ActionButtons
+        image={image}
+        onTakePicture={handleTakePicture}
+        onLoadPicture={handleLoadPicture}
+        onConfirmPicture={handleConfirmPicture}
+        onDiscardPicture={handleDiscardPicture}
+      />
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        style={{ display: "none" }}
+        onChange={handleImageChange}
+      />
       {isCameraOpen && (
         <NativeCameraCapture
           onCapture={(capturedImage) => {

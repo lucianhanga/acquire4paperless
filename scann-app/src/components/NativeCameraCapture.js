@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
 function NativeCameraCapture({ onCapture }) {
   const fileInputRef = useRef(null);
@@ -11,6 +11,10 @@ function NativeCameraCapture({ onCapture }) {
     }
   };
 
+  useEffect(() => {
+    fileInputRef.current.click();
+  }, []);
+
   return (
     <div>
       <input
@@ -21,7 +25,6 @@ function NativeCameraCapture({ onCapture }) {
         style={{ display: "none" }}
         onChange={handleImageChange}
       />
-      <button onClick={() => fileInputRef.current.click()}>Open Camera</button>
     </div>
   );
 }
