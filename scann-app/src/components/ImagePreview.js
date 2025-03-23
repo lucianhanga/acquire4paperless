@@ -3,14 +3,8 @@ import "./ImagePreview.css";
 
 function ImagePreview({ image }) {
   return (
-    <div>
-      {image ? (
-        <img src={image} alt="Preview" className="image-preview" />
-      ) : (
-        <div className="image-placeholder">
-          <p>Picture Preview</p>
-        </div>
-      )}
+    <div className="image-preview">
+      {image ? <img src={image} alt="Preview" /> : <div className="image-placeholder">No Image</div>}
     </div>
   );
 }
