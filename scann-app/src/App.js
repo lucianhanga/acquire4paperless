@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PageAcquisition from "./components/PageAcquisition";
 import PictureList from "./components/PictureList";
+import GeneratePdfButton from "./components/GeneratePdfButton";
 import "./App.css";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         )}
         {isPageAcquisitionOpen && <PageAcquisition onConfirm={handleConfirmPicture} />}
         <PictureList pictures={pictures} />
+        <GeneratePdfButton pictures={pictures} />
       </header>
     </div>
   );
