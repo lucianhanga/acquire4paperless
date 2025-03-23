@@ -5,9 +5,19 @@
   margin-top: 20px;
 }
 
-.picture-item {
+.picture-item-container {
   width: 100px;
-  height: 100px;
-  object-fit: cover;
+  height: 141px; /* A4 aspect ratio (1:1.414) */
   margin: 5px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.picture-item {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
 }
