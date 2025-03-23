@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PageList from "./PageList";
 import AcquirePage from "./AcquirePage";
+import jsPDF from "jspdf";
 import "./Content.css";
 
 function Content() {
@@ -81,6 +82,19 @@ function Content() {
     setPages(pages.filter((_, i) => i !== index));
   };
 
+  const handleSubmit = () => {
+    const pdf = new jsPDF('portrait', 'pt', 'a4');
+    pages.forEach((page, index) => {
+      if (index > 0) {
+        pdf.addPage();
+      }
+      const img = new Image();
+      img.src = page;
+      pdf.addImage(img, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
+    });
+    pdf.save('document.pdf');
+  };
+
   return (
     <div className="App-content">
       {isAcquiring ? (
@@ -97,7 +111,7 @@ function Content() {
           <PageList pages={pages} onDelete={handleDelete} />
           <div className="button-row">
             <button className="add-page-button" onClick={handleAddPage}>Add Page</button>
-            <button className="submit-button">Submit</button>
+            <button className="submit-button" onClick={handleSubmit}>Submit</button>
             <button className="discard-button">Discard</button>
           </div>
         </>
