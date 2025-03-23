@@ -6,6 +6,10 @@ export default async function getCroppedImg(imageSrc, pixelCrop) {
   canvas.width = pixelCrop.width;
   canvas.height = pixelCrop.height;
 
+  // Fill the canvas with a white background
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
   ctx.drawImage(
     image,
     pixelCrop.x,
