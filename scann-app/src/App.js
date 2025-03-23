@@ -4,6 +4,7 @@ import PictureList from "./components/PictureList";
 import GeneratePdfButton from "./components/GeneratePdfButton";
 import PdfPreview from "./components/PdfPreview";
 import Header from "./components/Header";
+import AddPageButton from "./components/AddPageButton";
 import "./App.css";
 
 function App() {
@@ -41,7 +42,7 @@ function App() {
         ) : (
           <>
             {!isPageAcquisitionOpen && (
-              <button onClick={() => setIsPageAcquisitionOpen(true)}>Add Page</button>
+              <AddPageButton onClick={() => setIsPageAcquisitionOpen(true)} />
             )}
             {isPageAcquisitionOpen && <PageAcquisition onConfirm={handleConfirmPicture} />}
             {!isPageAcquisitionOpen && <PictureList pictures={pictures} />}
