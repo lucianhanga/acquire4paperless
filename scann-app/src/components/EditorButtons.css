@@ -6,3 +6,8 @@
   box-sizing: border-box;
   background-color: rgba(255, 255, 255, 0.8); /* Added background color for better visibility */
 }
+
+.editor-buttons button {
+  padding: 5px 10px; /* Adjusted padding to make the buttons smaller */
+  font-size: 14px; /* Adjusted font size to make the buttons smaller */
+}

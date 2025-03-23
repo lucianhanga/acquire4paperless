@@ -1,3 +1,10 @@
 .button-row {
+  display: flex;
+  justify-content: space-between;
   margin-top: 10px;
+}
+
+.button-row button {
+  padding: 5px 10px; /* Adjusted padding to make the buttons smaller */
+  font-size: 14px; /* Adjusted font size to make the buttons smaller */
 }
