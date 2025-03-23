@@ -1,14 +1,22 @@
 import React from "react";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt, FaArrowUp, FaArrowDown } from "react-icons/fa";
 import "./Page.css";
 
-function Page({ page, index, onDelete }) {
+function Page({ page, index, onDelete, onMoveUp, onMoveDown }) {
   return (
     <div className="page-item">
       <img src={page} alt={`Page ${index + 1}`} />
-      <button className="delete-button" onClick={() => onDelete(index)}>
-        <FaTrashAlt />
-      </button>
+      <div className="button-group">
+        <button className="move-button" onClick={() => onMoveUp(index)}>
+          <FaArrowUp />
+        </button>
+        <button className="move-button" onClick={() => onMoveDown(index)}>
+          <FaArrowDown />
+        </button>
+        <button className="delete-button" onClick={() => onDelete(index)}>
+          <FaTrashAlt />
+        </button>
+      </div>
     </div>
   );
 }

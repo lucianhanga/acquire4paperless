@@ -12,15 +12,31 @@
   object-fit: contain;
 }
 
-.delete-button {
+.button-group {
   position: absolute;
   top: 5px;
   right: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.move-button,
+.delete-button {
   background: none;
   border: none;
   cursor: pointer;
-  color: #dc3545;
+  color: #007bff;
   font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.move-button:hover,
+.delete-button:hover {
+  color: #0056b3;
+}
+
+.delete-button {
+  color: #dc3545;
 }
 
 .delete-button:hover {

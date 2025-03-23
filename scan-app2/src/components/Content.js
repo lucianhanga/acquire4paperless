@@ -83,6 +83,22 @@ function Content() {
     setPages(pages.filter((_, i) => i !== index));
   };
 
+  const handleMoveUp = (index) => {
+    if (index > 0) {
+      const newPages = [...pages];
+      [newPages[index], newPages[index - 1]] = [newPages[index - 1], newPages[index]];
+      setPages(newPages);
+    }
+  };
+
+  const handleMoveDown = (index) => {
+    if (index < pages.length - 1) {
+      const newPages = [...pages];
+      [newPages[index], newPages[index + 1]] = [newPages[index + 1], newPages[index]];
+      setPages(newPages);
+    }
+  };
+
   const handleSubmit = () => {
     const pdf = new jsPDF('portrait', 'pt', 'a4');
     pages.forEach((page, index) => {
@@ -109,7 +125,7 @@ function Content() {
         />
       ) : (
         <>
-          <PageList pages={pages} onDelete={handleDelete} />
+          <PageList pages={pages} onDelete={handleDelete} onMoveUp={handleMoveUp} onMoveDown={handleMoveDown} />
           <div className="button-row">
             <button className="add-page-button" onClick={handleAddPage}>Add Page</button>
             <button className="submit-button" onClick={handleSubmit}>Submit</button>
