@@ -1,0 +1,20 @@
+.App-statusbar {
+    background-color: #282c34;
+    padding: 10px;
+    color: white;
+    text-align: center;
+    height: 30px; /* Fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it stays on top */
+  }
+  
+  .App-statusbar p {
+    margin: 0;
+  }
+  

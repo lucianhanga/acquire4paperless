@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import PageAcquisition from "./PageAcquisition";
-import PictureList from "./PictureList";
-import GeneratePdfButton from "./GeneratePdfButton";
 import PdfPreview from "./PdfPreview";
-import AddPageButton from "./AddPageButton";
+import PictureSection from "./PictureSection";
+import AddPageSection from "./AddPageSection";
 import "./Body.css";
 
 function Body() {
@@ -32,24 +31,35 @@ function Body() {
     setPictures([]);
   };
 
+  const renderPdfPreview = () => (
+    <PdfPreview pdfUrl={pdfUrl} onSubmit={handleSubmitPdf} onDiscard={handleDiscardPdf} />
+  );
+
+  const renderPageAcquisition = () => (
+    <PageAcquisition onConfirm={handleConfirmPicture} />
+  );
+
+  const renderPictureSection = () => (
+    <PictureSection
+      pictures={pictures}
+      onPdfGenerated={handlePdfGenerated}
+      onDiscardPictures={handleDiscardPictures}
+    />
+  );
+
+  const renderAddPageSection = () => (
+    <AddPageSection onAddPage={() => setIsPageAcquisitionOpen(true)} />
+  );
+
   return (
     <div className="App-content">
       {pdfUrl ? (
-        <PdfPreview pdfUrl={pdfUrl} onSubmit={handleSubmitPdf} onDiscard={handleDiscardPdf} />
+        renderPdfPreview()
       ) : (
         <>
-          {!isPageAcquisitionOpen && (
-            <AddPageButton onClick={() => setIsPageAcquisitionOpen(true)} />
-          )}
-          {isPageAcquisitionOpen && <PageAcquisition onConfirm={handleConfirmPicture} />}
-          {!isPageAcquisitionOpen && <PictureList pictures={pictures} />}
-          {!isPageAcquisitionOpen && (
-            <GeneratePdfButton
-              pictures={pictures}
-              onPdfGenerated={handlePdfGenerated}
-              onDiscard={handleDiscardPictures}
-            />
-          )}
+          {!isPageAcquisitionOpen && renderAddPageSection()}
+          {isPageAcquisitionOpen && renderPageAcquisition()}
+          {!isPageAcquisitionOpen && renderPictureSection()}
         </>
       )}
     </div>
