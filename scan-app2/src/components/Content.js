@@ -24,8 +24,8 @@ function Content() {
     // Handle edit action
   };
 
-  const handleTakePicture = () => {
-    // Handle take picture action
+  const handleTakePicture = (imageUrl) => {
+    setImage(imageUrl);
   };
 
   const handleSelectPicture = (event) => {
