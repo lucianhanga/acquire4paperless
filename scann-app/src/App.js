@@ -21,10 +21,15 @@ function App() {
 
   const handleDiscardPdf = () => {
     setPdfUrl(null);
+    setPictures([]);
   };
 
   const handleSubmitPdf = () => {
     // Do nothing for now
+  };
+
+  const handleDiscardPictures = () => {
+    setPictures([]);
   };
 
   return (
@@ -40,7 +45,11 @@ function App() {
             )}
             {isPageAcquisitionOpen && <PageAcquisition onConfirm={handleConfirmPicture} />}
             <PictureList pictures={pictures} />
-            <GeneratePdfButton pictures={pictures} onPdfGenerated={handlePdfGenerated} />
+            <GeneratePdfButton
+              pictures={pictures}
+              onPdfGenerated={handlePdfGenerated}
+              onDiscard={handleDiscardPictures}
+            />
           </>
         )}
       </header>
