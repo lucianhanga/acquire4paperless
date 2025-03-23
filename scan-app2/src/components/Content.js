@@ -6,6 +6,7 @@ import "./Content.css";
 function Content() {
   const [isAcquiring, setIsAcquiring] = useState(false);
   const [image, setImage] = useState(null);
+  const [pages, setPages] = useState([]);
 
   const handleAddPage = () => {
     setIsAcquiring(true);
@@ -17,7 +18,11 @@ function Content() {
   };
 
   const handleAdd = () => {
-    // Handle add action
+    if (image) {
+      setPages([...pages, image]);
+      setIsAcquiring(false);
+      setImage(null); // Reset image after adding
+    }
   };
 
   const handleEdit = () => {
@@ -85,7 +90,7 @@ function Content() {
         />
       ) : (
         <>
-          <PageList />
+          <PageList pages={pages} />
           <div className="button-row">
             <button className="add-page-button" onClick={handleAddPage}>Add Page</button>
             <button className="submit-button">Submit</button>

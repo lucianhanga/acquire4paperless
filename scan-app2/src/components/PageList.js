@@ -1,10 +1,14 @@
 import React from "react";
 import "./PageList.css";
 
-function PageList() {
+function PageList({ pages }) {
   return (
     <div className="page-list">
-      {/* Your page list content goes here */}
+      {pages.map((page, index) => (
+        <div key={index} className="page-item">
+          <img src={page} alt={`Page ${index + 1}`} />
+        </div>
+      ))}
     </div>
   );
 }
