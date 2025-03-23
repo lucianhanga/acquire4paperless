@@ -21,7 +21,6 @@ function App() {
 
   const handleDiscardPdf = () => {
     setPdfUrl(null);
-    setPictures([]);
   };
 
   const handleSubmitPdf = () => {

@@ -1,14 +1,21 @@
 import React, { useEffect, useRef } from "react";
-import PDFObject from "pdfobject";
 import "./PdfPreview.css";
 
 function PdfPreview({ pdfUrl, onSubmit, onDiscard }) {
   const pdfContainerRef = useRef(null);
 
   useEffect(() => {
-    PDFObject.embed(pdfUrl, pdfContainerRef.current, {
-      fallbackLink: `<p>This browser does not support inline PDFs. Please <a href="${pdfUrl}" download>download the PDF</a> to view it.</p>`,
-    });
+    const embedPdf = () => {
+      const iframe = document.createElement("iframe");
+      iframe.src = pdfUrl;
+      iframe.width = "100%";
+      iframe.height = "500px";
+      iframe.style.border = "none";
+      pdfContainerRef.current.innerHTML = "";
+      pdfContainerRef.current.appendChild(iframe);
+    };
+
+    embedPdf();
   }, [pdfUrl]);
 
   return (
