@@ -1,0 +1,5 @@
+.cropper-container {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 100px); /* Adjusted height to leave space for buttons and zoom slider */
+}

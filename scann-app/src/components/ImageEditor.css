@@ -1,0 +1,36 @@
+.image-editor {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  height: 400px; /* Increased height to accommodate buttons and zoom slider */
+  background-color: #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cropper-container {
+  position: relative;
+  width: 100%;
+  height: calc(100% - 100px); /* Adjusted height to leave space for buttons and zoom slider */
+}
+
+.zoom-slider {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.zoom-range {
+  width: 80%;
+}
+
+.editor-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.8); /* Added background color for better visibility */
+}
