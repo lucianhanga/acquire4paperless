@@ -1,14 +1,14 @@
 .picture-list {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column; /* Changed to column to make the list vertical */
+  align-items: center;
   margin-top: 20px;
 }
 
 .picture-item-container {
-  width: 100px;
-  height: 141px; /* A4 aspect ratio (1:1.414) */
-  margin: 5px;
+  width: 210px; /* A4 width in mm */
+  height: 297px; /* A4 height in mm */
+  margin: 10px 0; /* Adjusted margin for vertical spacing */
   background-color: white;
   display: flex;
   align-items: center;

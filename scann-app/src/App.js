@@ -43,12 +43,14 @@ function App() {
               <button onClick={() => setIsPageAcquisitionOpen(true)}>Add Page</button>
             )}
             {isPageAcquisitionOpen && <PageAcquisition onConfirm={handleConfirmPicture} />}
-            <PictureList pictures={pictures} />
-            <GeneratePdfButton
-              pictures={pictures}
-              onPdfGenerated={handlePdfGenerated}
-              onDiscard={handleDiscardPictures}
-            />
+            {!isPageAcquisitionOpen && <PictureList pictures={pictures} />}
+            {!isPageAcquisitionOpen && (
+              <GeneratePdfButton
+                pictures={pictures}
+                onPdfGenerated={handlePdfGenerated}
+                onDiscard={handleDiscardPictures}
+              />
+            )}
           </>
         )}
       </header>
