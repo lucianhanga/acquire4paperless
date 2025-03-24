@@ -15,6 +15,8 @@ function CropperContainer({ image, crop, zoom, aspect, onCropChange, onZoomChang
         onCropComplete={onCropComplete}
         showGrid={true}
         restrictPosition={false}
+        minZoom={0.3}
+        maxZoom={3}
       />
     </div>
   );
