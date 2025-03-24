@@ -9,7 +9,7 @@ function EditPage({ image, crop, zoom, onCropChange, onZoomChange, onCropComplet
         image={image}
         crop={crop}
         zoom={zoom}
-        aspect={4 / 3}
+        aspect={210 / 297}
         onCropChange={onCropChange}
         onZoomChange={onZoomChange}
         onCropComplete={onCropComplete}
