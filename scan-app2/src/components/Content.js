@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PageList from "./PageList";
 import AcquirePage from "./AcquirePage";
 import jsPDF from "jspdf";
+import { v4 as uuidv4 } from "uuid";
+import { ConfigContext } from "../context/ConfigContext";
 import "./Content.css";
 
-function Content() {
+function Content({ setStatus }) {
+  const { config } = useContext(ConfigContext);
   const [isAcquiring, setIsAcquiring] = useState(false);
   const [image, setImage] = useState(null);
   const [pages, setPages] = useState([]);
@@ -21,6 +24,7 @@ function Content() {
     setIsAcquiring(false);
     setImage(null); // Reset image when discarding
     setPages([]); // Clear the list of pictures
+    setStatus("Ready"); // Reset status
   };
 
   const handleAdd = () => {
@@ -104,6 +108,7 @@ function Content() {
   };
 
   const handleSubmit = () => {
+    setStatus("PDF generation in progress...");
     const pdf = new jsPDF('portrait', 'pt', 'a4');
     pages.forEach((page, index) => {
       if (index > 0) {
@@ -113,7 +118,47 @@ function Content() {
       img.src = page;
       pdf.addImage(img, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
     });
-    pdf.save('document.pdf');
+    const pdfBlob = pdf.output('blob');
+    const pdfName = `${uuidv4()}.pdf`;
+
+    setStatus("PDF generated. Upload in progress...");
+
+    // Upload the PDF to Azure Storage
+    const sasUrl = config.azureStorageUrl;
+
+    if (sasUrl) {
+      // Insert the filename before the SAS query string
+      const baseUrl = sasUrl.substring(0, sasUrl.indexOf('?'));
+      const sasToken = sasUrl.substring(sasUrl.indexOf('?'));
+      const azureStorageUrl = `${baseUrl}/${pdfName}${sasToken}`;
+
+      fetch(azureStorageUrl, {
+        method: 'PUT',
+        headers: {
+          'x-ms-blob-type': 'BlockBlob',
+          'Content-Type': 'application/pdf'
+        },
+        body: pdfBlob
+      })
+        .then(response => {
+          if (response.ok) {
+            setStatus("PDF uploaded successfully.");
+            console.log('Successfully uploaded PDF:', response);
+          } else {
+            response.text().then(text => {
+              console.error('Upload failed:', response.status, text);
+            });
+            setStatus("Error uploading PDF.");
+          }
+        })
+        .catch(error => {
+          setStatus("Error uploading PDF.");
+          console.error('Error uploading PDF:', error);
+        });
+    } else {
+      setStatus("Azure Storage URL is not configured.");
+      console.error('Azure Storage URL is not configured.');
+    }
   };
 
   return (
