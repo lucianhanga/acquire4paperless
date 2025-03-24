@@ -1,9 +1,0 @@
-.App-content {
-  flex: 1; /* Take up remaining space */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: relative; /* Ensure child elements can use absolute positioning */
-  padding: 20px;
-}
