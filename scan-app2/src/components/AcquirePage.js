@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PhotoButtons from "./PhotoButtons";
 import AcquireButtons from "./AcquireButtons";
 import NativeCameraCapture from "./NativeCameraCapture";
+import Preview from "./Preview";
 import "./AcquirePage.css";
 
 function AcquirePage({ onDiscard, onAdd, onEdit, onTakePicture, onSelectPicture, image }) {
@@ -18,9 +19,7 @@ function AcquirePage({ onDiscard, onAdd, onEdit, onTakePicture, onSelectPicture,
 
   return (
     <div className="acquire-page">
-      <div className="image-preview">
-        {image ? <img src={image} alt="Preview" /> : <div className="image-placeholder">No Image</div>}
-      </div>
+      <Preview image={image} />
       <PhotoButtons onTakePicture={handleTakePictureClick} onSelectPicture={onSelectPicture} />
       <AcquireButtons onAdd={onAdd} onDiscard={onDiscard} onEdit={onEdit} />
       {isCapturing && <NativeCameraCapture onCapture={handleCapture} />}
