@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import PageList from "./PageList";
 import AcquirePage from "./AcquirePage";
-import jsPDF from "jspdf";
+import { PDFDocument, rgb } from "pdf-lib";
 import { v4 as uuidv4 } from "uuid";
 import { ConfigContext } from "../context/ConfigContext";
 import "./Content.css";
@@ -40,7 +40,41 @@ function Content({ setStatus }) {
   };
 
   const handleTakePicture = (imageUrl) => {
-    setImage(imageUrl);
+    const img = new Image();
+    img.src = imageUrl;
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      const a4Width = 2480; // A4 width in pixels at 300 DPI
+      const a4Height = 3508; // A4 height in pixels at 300 DPI
+      canvas.width = a4Width;
+      canvas.height = a4Height;
+
+      // Fill the canvas with a white background
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Calculate the aspect ratio and draw the image centered
+      const imgAspectRatio = img.width / img.height;
+      const a4AspectRatio = a4Width / a4Height;
+      let drawWidth, drawHeight, offsetX, offsetY;
+
+      if (imgAspectRatio > a4AspectRatio) {
+        drawWidth = a4Width;
+        drawHeight = a4Width / imgAspectRatio;
+        offsetX = 0;
+        offsetY = (a4Height - drawHeight) / 2;
+      } else {
+        drawHeight = a4Height;
+        drawWidth = a4Height * imgAspectRatio;
+        offsetX = (a4Width - drawWidth) / 2;
+        offsetY = 0;
+      }
+
+      ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+      const compressedImage = canvas.toDataURL("image/jpeg", 0.7); // Compress to 70% quality
+      setImage(compressedImage);
+    };
   };
 
   const handleSelectPicture = (event) => {
@@ -79,7 +113,8 @@ function Content({ setStatus }) {
           }
 
           ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-          setImage(canvas.toDataURL("image/jpeg", 1.0)); // Use maximum quality
+          const compressedImage = canvas.toDataURL("image/jpeg", 0.7); // Compress to 70% quality
+          setImage(compressedImage);
         };
         img.src = e.target.result;
       };
@@ -107,18 +142,49 @@ function Content({ setStatus }) {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setStatus("PDF generation in progress...");
-    const pdf = new jsPDF('portrait', 'pt', 'a4');
-    pages.forEach((page, index) => {
-      if (index > 0) {
-        pdf.addPage();
-      }
+    const pdfDoc = await PDFDocument.create();
+    const a4Width = 595.28; // A4 width in points (1/72 inch)
+    const a4Height = 841.89; // A4 height in points (1/72 inch)
+
+    for (const page of pages) {
       const img = new Image();
       img.src = page;
-      pdf.addImage(img, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
-    });
-    const pdfBlob = pdf.output('blob');
+      await new Promise((resolve) => {
+        img.onload = async () => {
+          const pdfPage = pdfDoc.addPage([a4Width, a4Height]);
+          const imgAspectRatio = img.width / img.height;
+          const a4AspectRatio = a4Width / a4Height;
+          let drawWidth, drawHeight, offsetX, offsetY;
+
+          if (imgAspectRatio > a4AspectRatio) {
+            drawWidth = a4Width;
+            drawHeight = a4Width / imgAspectRatio;
+            offsetX = 0;
+            offsetY = (a4Height - drawHeight) / 2;
+          } else {
+            drawHeight = a4Height;
+            drawWidth = a4Height * imgAspectRatio;
+            offsetX = (a4Width - drawWidth) / 2;
+            offsetY = 0;
+          }
+
+          const imgBytes = await fetch(page).then((res) => res.arrayBuffer());
+          const pdfImg = await pdfDoc.embedJpg(imgBytes);
+          pdfPage.drawImage(pdfImg, {
+            x: offsetX,
+            y: offsetY,
+            width: drawWidth,
+            height: drawHeight,
+          });
+          resolve();
+        };
+      });
+    }
+
+    const pdfBytes = await pdfDoc.save();
+    const pdfBlob = new Blob([pdfBytes], { type: "application/pdf" });
     const pdfName = `${uuidv4()}.pdf`;
 
     setStatus("PDF generated. Upload in progress...");
