@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PageList from "./PageList";
 import AcquirePage from "./AcquirePage";
 import jsPDF from "jspdf";
+import { ConfigContext } from "../context/ConfigContext";
 import "./Content.css";
 
 function Content() {
+  const { config } = useContext(ConfigContext);
   const [isAcquiring, setIsAcquiring] = useState(false);
   const [image, setImage] = useState(null);
   const [pages, setPages] = useState([]);
@@ -113,7 +115,28 @@ function Content() {
       img.src = page;
       pdf.addImage(img, 'JPEG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight());
     });
-    pdf.save('document.pdf');
+    const pdfBlob = pdf.output('blob');
+
+    // Upload the PDF to Azure Storage
+    const azureStorageUrl = config.azureStorageUrl;
+    if (azureStorageUrl) {
+      const formData = new FormData();
+      formData.append('file', pdfBlob, 'document.pdf');
+
+      fetch(azureStorageUrl, {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Successfully uploaded PDF:', data);
+        })
+        .catch(error => {
+          console.error('Error uploading PDF:', error);
+        });
+    } else {
+      console.error('Azure Storage URL is not configured.');
+    }
   };
 
   return (
