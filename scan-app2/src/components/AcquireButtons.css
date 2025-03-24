@@ -1,18 +1,4 @@
-.button-row {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
-
-.button-row button {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  margin: 0 10px;
-  border: none;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
+@import './CommonStyles.css';
 
 .add-button {
   background-color: #28a745;
