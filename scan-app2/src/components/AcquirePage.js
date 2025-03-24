@@ -34,6 +34,11 @@ function AcquirePage({ onDiscard, onAdd, onEdit, onTakePicture, onSelectPicture,
     img.onload = () => {
       canvas.width = croppedAreaPixels.width;
       canvas.height = croppedAreaPixels.height;
+
+      // Fill the canvas with a white background
+      ctx.fillStyle = "white";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
       ctx.drawImage(
         img,
         croppedAreaPixels.x,
