@@ -1,10 +1,10 @@
 import React from "react";
 import "./StatusBar.css";
 
-function StatusBar() {
+function StatusBar({ status }) {
   return (
     <footer className="App-statusbar">
-      <p>Status: Ready</p>
+      <p>Status: {status}</p>
     </footer>
   );
 }
