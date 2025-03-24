@@ -9,12 +9,12 @@
   background-color: #218838;
 }
 
-.discard-button {
+.cancel-button {
   background-color: #dc3545;
   color: white;
 }
 
-.discard-button:hover {
+.cancel-button:hover {
   background-color: #c82333;
 }
 

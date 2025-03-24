@@ -6,7 +6,7 @@ import Preview from "./Preview";
 import EditPage from "./EditPage";
 import "./AcquirePage.css";
 
-function AcquirePage({ onDiscard, onAdd, onEdit, onTakePicture, onSelectPicture, image }) {
+function AcquirePage({ onCancel, onAdd, onEdit, onTakePicture, onSelectPicture, image }) {
   const [isCapturing, setIsCapturing] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -66,7 +66,7 @@ function AcquirePage({ onDiscard, onAdd, onEdit, onTakePicture, onSelectPicture,
         <>
           <Preview image={image} />
           <PhotoButtons onTakePicture={handleTakePictureClick} onSelectPicture={onSelectPicture} />
-          <AcquireButtons onAdd={onAdd} onDiscard={onDiscard} onEdit={handleEditClick} />
+          <AcquireButtons onAdd={onAdd} onCancel={onCancel} onEdit={handleEditClick} />
           {isCapturing && <NativeCameraCapture onCapture={handleCapture} />}
         </>
       ) : (

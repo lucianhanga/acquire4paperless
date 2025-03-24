@@ -13,6 +13,10 @@ function Content() {
     setIsAcquiring(true);
   };
 
+  const handleCancel = () => {
+    setImage(null); // Reset image when canceling
+  };
+
   const handleDiscard = () => {
     setIsAcquiring(false);
     setImage(null); // Reset image when discarding
@@ -116,7 +120,7 @@ function Content() {
     <div className="App-content">
       {isAcquiring ? (
         <AcquirePage
-          onDiscard={handleDiscard}
+          onCancel={handleCancel}
           onAdd={handleAdd}
           onEdit={handleEdit}
           onTakePicture={handleTakePicture}
