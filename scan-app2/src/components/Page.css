@@ -4,13 +4,13 @@
   border: 1px solid #ccc;
   padding: 5px; /* Reduced padding */
   background-color: #fff;
-  width: 160px; /* Increased width */
-  height: 200px; /* Increased height */
+  width: 140px; /* Reduced width */
+  height: auto; /* Maintain aspect ratio */
 }
 
 .page-item img {
   max-width: 100%;
-  max-height: 100%;
+  height: auto; /* Maintain aspect ratio */
   object-fit: contain;
 }
 
