@@ -242,9 +242,9 @@ function Content({ setStatus }) {
         <>
           <PageList pages={pages} onDelete={handleDelete} onMoveUp={handleMoveUp} onMoveDown={handleMoveDown} />
           <div className="button-row">
-            <button className="add-page-button" onClick={handleAddPage}>Add Page</button>
-            <button className="submit-button" onClick={handleSubmit}>Submit</button>
-            <button className="discard-button" onClick={handleDiscard}>Discard</button>
+            <button className="add-page-button" onClick={handleAddPage}>Add New Page</button>
+            <button className="submit-button" onClick={handleSubmit}>Submit Doc</button>
+            <button className="discard-button" onClick={handleDiscard}>Discard Doc</button>
           </div>
         </>
       )}
