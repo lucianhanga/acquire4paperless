@@ -1,15 +1,28 @@
 .page-item {
   position: relative;
-  margin: 10px;
+  margin: 5px; /* Reduced margin */
   border: 1px solid #ccc;
-  padding: 10px;
+  padding: 5px; /* Reduced padding */
   background-color: #fff;
+  width: 140px; /* Reduced width */
+  height: auto; /* Maintain aspect ratio */
 }
 
 .page-item img {
   max-width: 100%;
-  max-height: 100%;
+  height: auto; /* Maintain aspect ratio */
   object-fit: contain;
+}
+
+.page-number {
+  position: absolute;
+  bottom: 5px; /* Moved to the bottom */
+  left: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 .button-group {
@@ -26,7 +39,8 @@
   border: none;
   cursor: pointer;
   color: #007bff;
-  font-size: 20px;
+  font-size: 20px; /* Increased font size */
+  padding: 10px; /* Added padding */
 }
 
 .move-button:hover,

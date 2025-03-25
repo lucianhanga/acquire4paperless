@@ -17,6 +17,7 @@ function Content({ setStatus }) {
   };
 
   const handleCancel = () => {
+    setIsAcquiring(false);
     setImage(null); // Reset image when canceling
   };
 
@@ -240,11 +241,13 @@ function Content({ setStatus }) {
         />
       ) : (
         <>
-          <PageList pages={pages} onDelete={handleDelete} onMoveUp={handleMoveUp} onMoveDown={handleMoveDown} />
+          <div className="PageList-container">
+            <PageList pages={pages} onDelete={handleDelete} onMoveUp={handleMoveUp} onMoveDown={handleMoveDown} />
+          </div>
           <div className="button-row">
             <button className="add-page-button" onClick={handleAddPage}>Add Page</button>
-            <button className="submit-button" onClick={handleSubmit}>Submit</button>
-            <button className="discard-button" onClick={handleDiscard}>Discard</button>
+            <button className="submit-button" onClick={handleSubmit}>Submit Doc</button>
+            <button className="discard-button" onClick={handleDiscard}>Discard Doc</button>
           </div>
         </>
       )}

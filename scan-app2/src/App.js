@@ -12,7 +12,9 @@ function App() {
     <ConfigProvider>
       <div className="App">
         <Header />
-        <Content setStatus={setStatus} />
+        <div className="Content">
+          <Content setStatus={setStatus} />
+        </div>
         <StatusBar status={status} />
       </div>
     </ConfigProvider>

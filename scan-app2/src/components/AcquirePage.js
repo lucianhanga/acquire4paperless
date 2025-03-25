@@ -60,13 +60,19 @@ function AcquirePage({ onCancel, onAdd, onEdit, onTakePicture, onSelectPicture, 
     setIsEditing(false);
   };
 
+  const handleCancel = () => {
+    setIsCapturing(false);
+    setIsEditing(false);
+    onCancel();
+  };
+
   return (
     <div className="acquire-page">
       {!isEditing ? (
         <>
           <Preview image={image} />
           <PhotoButtons onTakePicture={handleTakePictureClick} onSelectPicture={onSelectPicture} />
-          <AcquireButtons onAdd={onAdd} onCancel={onCancel} onEdit={handleEditClick} />
+          <AcquireButtons onAdd={onAdd} onCancel={handleCancel} onEdit={handleEditClick} disableEdit={!image} disableCancel={!image} />
           {isCapturing && <NativeCameraCapture onCapture={handleCapture} />}
         </>
       ) : (
